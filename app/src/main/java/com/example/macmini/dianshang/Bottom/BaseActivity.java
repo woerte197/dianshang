@@ -53,5 +53,8 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
+    public void update(){
+
+    }
 
 }

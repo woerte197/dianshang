@@ -1,0 +1,108 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d40"
+            android:text="正在更新"
+            android:textColor="@color/home_title_color"
+            android:textSize="19sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="@dimen/d0"
+            android:layout_height="@dimen/d05"
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginRight="@dimen/d10"
+            android:layout_marginTop="@dimen/d10"
+            android:background="@color/colorFED837"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d10"
+            android:textColor="@color/dialog_message_text_color"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="@id/line"
+            app:layout_constraintTop_toBottomOf="@id/line"
+
+            />
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="@dimen/d0"
+            android:layout_height="@dimen/d14"
+            android:layout_marginBottom="@dimen/d20"
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginRight="@dimen/d10"
+            android:layout_marginTop="@dimen/d10"
+            android:maxHeight="@dimen/d100"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_content"
+            />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/stop"
+            android:layout_width="@dimen/d0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d20"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d10"
+            android:paddingTop="@dimen/d10"
+            android:text="下载"
+            android:textColor="@color/home_title_color"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/pb"/>
+
+        <TextView
+            android:id="@+id/hide"
+            android:layout_width="@dimen/d0"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/d10"
+            android:paddingTop="@dimen/d10"
+            android:text="暂停下载"
+            android:textColor="@color/home_title_color"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@id/stop"
+            app:layout_constraintLeft_toLeftOf="@id/guide"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/stop"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

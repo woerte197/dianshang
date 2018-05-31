@@ -1,7 +1,12 @@
 package com.example.macmini.dianshang.Activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.example.macmini.dianshang.Bottom.BaseActivity;
@@ -27,11 +32,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
         initFragement();
+        isGrantExternalRW();
         binding.linearFirst.setOnClickListener(this);
         binding.linearSecond.setOnClickListener(this);
         binding.linearThree.setOnClickListener(this);
-
-
 
     }
 
@@ -47,6 +51,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         setFragment(tabBeanList);
     }
+    public void isGrantExternalRW() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
+
 
     @Override
     public void onClick(View view) {

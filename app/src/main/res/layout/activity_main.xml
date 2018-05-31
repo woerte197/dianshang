@@ -4,10 +4,10 @@
     <data>
 
         <import type="com.example.macmini.dianshang.JavaBean.TabBean"/>
-
         <variable
             name="tab"
-            type="com.example.macmini.dianshang.JavaBean.TabBean"/>
+            type="java.util.List&lt;TabBean&gt;"/>
+
     </data>
 
     <android.support.constraint.ConstraintLayout

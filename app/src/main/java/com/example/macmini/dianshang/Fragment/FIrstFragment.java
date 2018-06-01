@@ -15,8 +15,10 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.macmini.dianshang.Activity.UserActivity;
 import com.example.macmini.dianshang.ApiFactory.ApiFactory;
 import com.example.macmini.dianshang.Bottom.BindFragment;
+import com.example.macmini.dianshang.Fragment.DialogFragment.ImageFragment;
 import com.example.macmini.dianshang.Fragment.DialogFragment.UpdateFragment;
 import com.example.macmini.dianshang.R;
 import com.example.macmini.dianshang.Tool.ShowMessege;
@@ -54,20 +56,20 @@ public class FIrstFragment extends BindFragment<FragmentFirstBinding> {
     }
 
 
-
-
     private void initData() {
     }
 
     private void initEvent() {
         bindView.buttonDown.setOnClickListener(view -> {
-            UpdateFragment updateFragment=new UpdateFragment();
-            updateFragment.show(getActivity().getSupportFragmentManager(),"update");
-
-
+            UpdateFragment updateFragment = new UpdateFragment();
+            updateFragment.show(getActivity().getSupportFragmentManager(), "update");
+        });
+        bindView.imageUser.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), UserActivity.class);
+            getActivity().startActivity(intent);
         });
     }
-
 
 
     @Override
@@ -75,4 +77,8 @@ public class FIrstFragment extends BindFragment<FragmentFirstBinding> {
         return R.layout.fragment_first;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

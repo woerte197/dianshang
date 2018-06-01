@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import com.example.macmini.dianshang.ApiFactory.ApiFactory;
 import com.example.macmini.dianshang.R;
 import com.example.macmini.dianshang.Tool.ShowMessege;
+import com.example.macmini.dianshang.Utils.SdUtils;
 import com.example.macmini.dianshang.Utils.ShareUtils;
 import com.example.macmini.dianshang.databinding.FragmentUpdateBinding;
 
@@ -41,7 +42,9 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
     private File file;
     String filePath;
     private long allsize;
+    private boolean isfirst=true;
     boolean down = true;
+    private String headers;
     private static final String TAG = "UpdateFragment";
     private Handler handler = new Handler() {
         @Override
@@ -82,8 +85,11 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        bindview.stop.setEnabled(true);
         bindview.stop.setOnClickListener(view -> {
-            download();
+            Log.i(TAG, "onActivityCreated: "+isfirst);
+            download(true);
+            bindview.stop.setEnabled(false);
         });
         bindview.hide.setOnClickListener(view -> {
             if (down) {
@@ -92,25 +98,39 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
             } else {
                 postjindu(3, 0);
                 down = true;
-                download();
+                download(false);
 
             }
 
         });
     }
 
-    private void download() {
-        filePath = getSdCard() + "/TEST/Down/" + "gaokao.apk";
+    private void download(boolean isfirst) {
+        if (!SdUtils.isSD()){
+            ShowMessege.getShowMessege().showString("没有SD卡");
+            return;
+        }
+        filePath = SdUtils.getSdCard() + "/TEST/Down/" + "gaokao.apk";
         downloadUrl = "http://p.gdown.baidu.com/3f2ace8614abfa661843ec66e6548aa982cf88d579607be812ad48c4b240044dd9387351e5dd5365c890271eb097b1d63f692ba823342d1cafe944aa064a5c3bae9da64a7a875d7a8801cf6e54dd6d527a61710e5b831f0e310c8dd439b8e43e827a013f3998f4f59d7a2796dd1fbf43d5a8d9675a8a94ca8089872dd3352befeec1ad2d7836467c570e7e38fe8a118772f43408ce2a28bb7631640953de66dbc58f29b5df2eeb11ce26a71c4ba0fd4dfb49904557d40d224909c0da1b44efa2924ad35a5c9d63d31f8cb79d369adce5faddafe2f5caa10917514d4fb96b3004cd6d929780baeeb677338830445ada965168c8926d00af2db8420f96f1a4d67c";
-        Log.i(TAG, "download: "+ ShareUtils.getIns().getDownload());
-        if (ShareUtils.getIns().getDownload()==8339087){
+        Log.i(TAG, "download: " + ShareUtils.getIns().getDownload());
+        if (ShareUtils.getIns().getDownload() >=allsize) {
             ShareUtils.getIns().setDownload(0);
         }
-        String  headers = "bytes=" + ShareUtils.getIns().getDownload() + "-" + 8339087;
+        if (isfirst) {
+            headers = null;
+        } else {
+            headers="bytes=" + ShareUtils.getIns().getDownload() + "-" + allsize;
+            Log.i(TAG, "download: "+allsize);
+        }
+
         ApiFactory.Ins().down(headers, downloadUrl)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .doOnNext(responseBody -> writeFile(responseBody, createFile()))
+                .doOnNext(responseBody -> {
+                    allsize = responseBody.contentLength() + ShareUtils.getIns().getDownload();
+                })
+                .doOnNext(responseBody ->
+                        writeFile(responseBody, createFile(isfirst)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(responseBody -> {
                 }, throwable -> {
@@ -119,14 +139,7 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
 
     }
 
-    public static String getSdCard() {
-        boolean sdExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-        if (sdExist) {
-            return Environment.getExternalStorageDirectory().getPath();
-        } else {
-            return null;
-        }
-    }
+
 
     public static void installApk(File file, Context context) {
         try {
@@ -161,9 +174,15 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
 
     }
 
-    private File createFile() {
+    private File createFile(boolean isfirst) {
         try {
             file = new File(filePath);
+            if (isfirst){
+                if (file.exists()){
+                    file.delete();
+                }
+            }
+            Log.i(TAG, "createFile: "+file);
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
@@ -171,6 +190,7 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return file;
     }
 
@@ -179,8 +199,7 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
         InputStream inputStream = body.byteStream();
         byte b[] = new byte[1024];
         try {
-            FileOutputStream outputStream = new FileOutputStream(file,true);
-            allsize = body.contentLength()+ShareUtils.getIns().getDownload();
+            FileOutputStream outputStream = new FileOutputStream(file, true);
             while (down) {
                 int read = inputStream.read(b);
                 if (read == -1) {
@@ -189,9 +208,9 @@ public class UpdateFragment extends BaseDialogFragment<FragmentUpdateBinding> {
                 }
                 long downsize = ShareUtils.getIns().getDownload() + read;
                 ShareUtils.getIns().setDownload(downsize);
-                Log.i(TAG, "writeFile: "+ShareUtils.getIns().getDownload());
+                Log.i(TAG, "writeFile: " + ShareUtils.getIns().getDownload());
                 float jindu = downsize / (allsize * 1.00f) * 100;
-                Log.i(TAG, "writeFile: "+jindu);
+                Log.i(TAG, "writeFile: " + jindu);
                 outputStream.write(b, 0, read);
                 postjindu(1, jindu);
             }

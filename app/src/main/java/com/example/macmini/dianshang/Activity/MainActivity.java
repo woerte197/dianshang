@@ -1,12 +1,14 @@
 package com.example.macmini.dianshang.Activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 
 import com.example.macmini.dianshang.Bottom.BaseActivity;
@@ -26,7 +28,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TabBean tabBean = new TabBean("first", new FIrstFragment(), true, R.drawable.ic_launcher_background, R.drawable.ic_launcher_background);
     private TabBean tabBean2 = new TabBean("second", new SecondFragment(), false, R.drawable.ic_launcher_background, R.drawable.ic_launcher_background);
     private TabBean tabBean3 = new TabBean("three", new ThreeFragment(), false, R.drawable.ic_launcher_background, R.drawable.ic_launcher_background);
-
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,5 +85,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setFragment(tabBeanList);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: "+requestCode);
     }
 }

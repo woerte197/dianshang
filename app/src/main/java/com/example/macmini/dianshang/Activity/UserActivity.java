@@ -15,13 +15,13 @@ import com.example.macmini.dianshang.databinding.ActivityUserBinding;
 public class UserActivity extends BaseActivity {
     ActivityUserBinding binding;
     private static final String TAG = "UserActivity";
-
+    ImageFragment imageFragment = new ImageFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user);
         binding.image.setOnClickListener(view -> {
-            ImageFragment imageFragment = new ImageFragment();
+
             imageFragment.show(this.getSupportFragmentManager(), "image");
         });
 
@@ -35,6 +35,7 @@ public class UserActivity extends BaseActivity {
             case 3:
                 Bundle bundle = data.getExtras();
                 if (bundle != null) {
+                    imageFragment.dismiss();
                     //在这里获得了剪裁后的Bitmap对象，可以用于上传
                     Bitmap image = bundle.getParcelable("data");
                     binding.image.setImageBitmap(image);

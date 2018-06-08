@@ -7,9 +7,9 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.example.macmini.dianshang.Fragment.FIrstFragment">
 
         <!-- TODO: Update blank fragment layout -->
@@ -22,6 +22,13 @@
         <ImageView
             android:id="@+id/image_user"
             android:layout_width="@dimen/d50"
-            android:layout_height="@dimen/d50"/>
+            android:layout_height="@dimen/d50"
+            android:src="@drawable/ic_launcher_background"/>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/d50"></Spinner>
+
     </LinearLayout>
 </layout>

@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TabBean tabBean2 = new TabBean("second", new SecondFragment(), false, R.drawable.ic_launcher_background, R.drawable.ic_launcher_background);
     private TabBean tabBean3 = new TabBean("three", new ThreeFragment(), false, R.drawable.ic_launcher_background, R.drawable.ic_launcher_background);
     private static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,19 +49,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabBeanList.add(tabBean2);
         tabBeanList.add(tabBean3);
         binding.setTab(tabBeanList);
-        for (TabBean tabBean:tabBeanList) {
-            addFragement(R.id.frame_layout_main,tabBean.getFragment());
+        for (TabBean tabBean : tabBeanList) {
+            addFragement(R.id.frame_layout_main, tabBean.getFragment());
         }
         setFragment(tabBeanList);
     }
+
     public void isGrantExternalRW() {
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
+    }
 
 
     @Override
@@ -90,6 +92,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult: "+requestCode);
+        Log.i(TAG, "onActivityResult: " + requestCode);
+    }
+
+    @Override
+    public void update() {
+        Log.i(TAG, "update: " + TAG);
     }
 }

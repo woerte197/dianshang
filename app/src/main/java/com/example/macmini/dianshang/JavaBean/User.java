@@ -8,8 +8,26 @@ import com.example.macmini.dianshang.Watcher;
  */
 
 public class User implements Watcher {
-    private String name;
-    private String pass;
+    private String username;
+    BuilderRelaize builderRelaize;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String password;
 
 
     @Override

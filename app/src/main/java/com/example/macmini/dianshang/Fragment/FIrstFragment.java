@@ -1,39 +1,23 @@
 package com.example.macmini.dianshang.Fragment;
 
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Process;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.AdapterView;
 
+import com.example.macmini.dianshang.Adapter.SpinnerAdapter;
 import com.example.macmini.dianshang.Activity.UserActivity;
-import com.example.macmini.dianshang.ApiFactory.ApiFactory;
 import com.example.macmini.dianshang.Bottom.BindFragment;
-import com.example.macmini.dianshang.Fragment.DialogFragment.ImageFragment;
 import com.example.macmini.dianshang.Fragment.DialogFragment.UpdateFragment;
 import com.example.macmini.dianshang.R;
-import com.example.macmini.dianshang.Tool.ShowMessege;
 import com.example.macmini.dianshang.databinding.FragmentFirstBinding;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import okhttp3.ResponseBody;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -42,14 +26,13 @@ import rx.schedulers.Schedulers;
 public class FIrstFragment extends BindFragment<FragmentFirstBinding> {
 
     private static final String TAG = "FIrstFragment";
-
+    private SpinnerAdapter spinnerAdapter;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         showToolBar();
         setToolBarTitle("首页");
-
         initEvent();
         initData();
 
@@ -69,6 +52,30 @@ public class FIrstFragment extends BindFragment<FragmentFirstBinding> {
             intent.setClass(getActivity(), UserActivity.class);
             getActivity().startActivity(intent);
         });
+        List<String> list = new ArrayList<>();
+        list.add("大连");
+        list.add("沈阳");
+        list.add("沈阳1");
+        list.add("沈阳2");
+        list.add("沈阳3");
+        list.add("沈阳4");
+        list.add("沈阳5");
+        spinnerAdapter = new SpinnerAdapter(getActivity());
+        spinnerAdapter.addd(list);
+        bindView.spinner.setAdapter(spinnerAdapter);
+        bindView.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i(TAG, "onItemSelected: " + list.get(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
     }
 
 

@@ -10,10 +10,15 @@
              tools:context="com.example.macmini.dianshang.Fragment.SecondFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="sadsadasd"/>
+   <ViewFlipper
+       android:id="@+id/viewliper"
+       android:autoStart="true"
+       android:flipInterval="2000"
+       android:inAnimation="@anim/inanimation"
+       android:outAnimation="@anim/outanimation"
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/d60">
+   </ViewFlipper>
 
 </FrameLayout>
 </layout>

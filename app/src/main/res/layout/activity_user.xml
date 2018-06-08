@@ -17,5 +17,18 @@
             android:layout_width="@dimen/d50"
             android:layout_height="@dimen/d50"
             android:src="@drawable/ic_launcher_background"/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/image"/>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/button"/>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

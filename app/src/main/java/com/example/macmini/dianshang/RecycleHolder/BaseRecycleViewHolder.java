@@ -15,9 +15,9 @@ import com.google.gson.internal.bind.DateTypeAdapter;
  */
 
 public abstract class BaseRecycleViewHolder<T, SV extends ViewDataBinding> extends RecyclerView.ViewHolder {
-    private SV bindview;
-    private Context context;
-    private LayoutInflater layoutInflater;
+    public  SV bindview;
+    public  Context context;
+    public  LayoutInflater layoutInflater;
     public BaseRecycleViewHolder(View itemView) {
         super(itemView);
         bindview= DataBindingUtil.bind(itemView);
